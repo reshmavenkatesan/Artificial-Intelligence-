@@ -1,0 +1,13 @@
+% Facts about birds and their ability to fly
+bird(parrot, true).
+bird(penguin, false).
+bird(eagle, true).
+bird(ostrich, false).
+
+% Rule to check if a bird can fly
+can_fly(Bird) :-
+    bird(Bird, true),
+    write(Bird), write(' can fly!'), nl.
+can_fly(Bird) :-
+    bird(Bird, false),
+    write(Bird), write(' cannot fly!'), nl.
