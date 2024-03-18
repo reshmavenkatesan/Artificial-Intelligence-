@@ -1,0 +1,15 @@
+% Facts
+teaches(john, math, 101).
+teaches(jane, physics, 102).
+teaches(joe, chemistry, 103).
+teaches(jill, biology, 104).
+
+% Rules
+subject_teacher(Subject, Teacher) :-
+    teaches(Teacher, Subject, _).
+
+teacher_subject(Teacher, Subject) :-
+    teaches(Teacher, Subject, _).
+
+teacher_code(Teacher, Code) :-
+    teaches(Teacher, _, Code).
