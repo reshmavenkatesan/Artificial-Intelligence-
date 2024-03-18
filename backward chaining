@@ -1,0 +1,14 @@
+% Rules
+symptom(X, flu) :- has_symptom(X, fever), has_symptom(X, cough).
+symptom(X, cold) :- has_symptom(X, cough), \+ has_symptom(X, fever).
+symptom(X, migraine) :- has_symptom(X, headache).
+
+% Backward chaining rule
+diagnose_patient(Person, Disease) :-
+    symptom(Person, Disease),
+    write(Person), write(' is diagnosed with '), write(Disease), nl.
+
+% Facts
+has_symptom(john, fever).
+has_symptom(john, cough).
+has_symptom(mary, headache).
