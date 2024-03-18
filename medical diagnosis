@@ -1,0 +1,16 @@
+% Facts about symptoms and diseases
+symptom(fever, flu).
+symptom(cough, flu).
+symptom(rash, measles).
+symptom(headache, migraine).
+symptom(headache, flu).
+symptom(cough, pneumonia).
+
+% Rule to diagnose a disease based on symptoms
+diagnose(Disease, Symptoms) :-
+    member(Symptom, Symptoms),
+    symptom(Symptom, Disease).
+
+% Example usage
+% ?- diagnose(Disease, [fever, cough]).
+% Disease = flu
