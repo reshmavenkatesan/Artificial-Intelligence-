@@ -1,0 +1,48 @@
+% Facts about graph edges and their costs
+edge(a, b, 3).
+edge(a, c, 5).
+edge(b, d, 2).
+edge(c, d, 4).
+edge(c, e, 6).
+edge(d, f, 7).
+edge(e, f, 8).
+
+% Best First Search algorithm implementation
+best_first_search(Start, Goal, Path) :-
+    best_first_search(Start, Goal, [Start], Path).
+
+best_first_search(Node, Node, Visited, Path) :-
+    reverse(Visited, Path).
+
+best_first_search(CurrentNode, Goal, Visited, Path) :-
+    % Generate possible next nodes
+    findall(NextNode, (edge(CurrentNode, NextNode, _), \+ member(NextNode, Visited)), NextNodes),
+    % Calculate heuristic values for next nodes
+    calculate_heuristic(NextNodes, Goal, Heuristics),
+    % Select the node with the lowest heuristic value
+    min_member(MinHeuristic, MinNode-Index, Heuristics-NextNodes),
+    nth0(Index, NextNodes, NextNode),
+    % Continue search from the selected node
+    best_first_search(NextNode, Goal, [NextNode|Visited], Path).
+
+% Calculate heuristic values based on a simple distance function (here, it's just the edge cost)
+calculate_heuristic([], _, []).
+calculate_heuristic([Node|Nodes], Goal, [Heuristic|Heuristics]) :-
+    edge(Node, Goal, Cost),
+    Heuristic is Cost,
+    calculate_heuristic(Nodes, Goal, Heuristics).
+
+% Predicate to find the minimum member of a list
+min_member(Min, ArgMin, [Head|Tail]) :-
+    min_member(Tail, Head, Head, Min, ArgMin).
+
+min_member([], _, MinArg, Min, MinArg).
+min_member([Head|Tail], CurrMin, CurrArgMin, Min, ArgMin) :-
+    (Head < CurrMin ->
+        NewMin = Head,
+        NewArgMin = CurrArgMin
+    ;
+        NewMin = CurrMin,
+        NewArgMin = CurrArgMin
+    ),
+    min_member(Tail, NewMin, NewArgMin, Min, ArgMin).
