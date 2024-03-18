@@ -1,0 +1,10 @@
+% Facts
+person(john, date(1990, 5, 15)).
+person(mary, date(1987, 10, 22)).
+person(lisa, date(1995, 3, 8)).
+person(peter, date(1980, 9, 17)).
+
+% Rules
+birthdate(Name, Date) :-
+    person(Name, date(Year, Month, Day)),
+    Date = date(Year, Month, Day).
