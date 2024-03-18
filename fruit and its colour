@@ -1,0 +1,16 @@
+% Facts about fruits and their colors
+fruit(apple, red).
+fruit(banana, yellow).
+fruit(grape, purple).
+fruit(orange, orange).
+
+% Rule to find a fruit based on its color
+find_fruit(Color, Fruit) :-
+    fruit(Fruit, Color).
+
+% Using backtracking to find all fruits of a specific color
+find_all_fruits(Color) :-
+    fruit(Fruit, Color),
+    write(Fruit), nl,
+    fail. % Forces backtracking to find more solutions
+find_all_fruits(_). % Base case to stop backtracking
