@@ -1,0 +1,18 @@
+% Initial state: monkey is at location A, has bananas at location B, and can move in directions left and right.
+state(at(a, on_ground), at(b, on_box), has_not).
+
+% Rules for moving the monkey and grabbing the bananas
+move(state(at(a, on_ground), at(B, on_box), has_not), grasp, state(at(a, on_ground), at(B, on_box), has)).
+move(state(at(a, on_ground), at(B, on_floor), has), climb, state(at(a, on_box), at(B, on_box), has)).
+move(state(at(a, on_box), at(B, on_box), has), push(BoxDir), state(at(AfterBox, on_box), at(B, on_box), has)) :-
+    (BoxDir = left, AfterBox = a; BoxDir = right, AfterBox = c).
+
+% Rules for solving the problem using depth-first search
+solve(state(_, _, has), []) :- 
+    write('Goal state reached!').
+solve(State1, [Move|OtherMoves]) :-
+    move(State1, Move, State2),
+    solve(State2, OtherMoves).
+
+% Initial call to solve the problem
+solve(state(at(a, on_ground), at(b, on_box), has_not), Solution).
